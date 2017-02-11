@@ -14,6 +14,16 @@ var Visualization = {
   make_visualization: function(graph){
     var self = Visualization;
 
+
+    var linkedByIndex = {};
+    _.map(graph.links, function(d) {
+      linkedByIndex[d.source + "," + d.target] = true;
+    });
+
+    function isConnected(a, b) {
+      return linkedByIndex[a + "," + b] || linkedByIndex[b + "," + a] || a == b;
+    }
+
     var radius = 18;
 
     var svg = d3.select("svg"),
@@ -53,9 +63,11 @@ var Visualization = {
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
-            .on("end", dragended));
+            .on("end", dragended))
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout);
 
-    node.append("circle")
+    var circle = node.append("circle")
         .attr("r", radius)
         .attr("fill", function(d) {
           if (d.fills != null) {
@@ -117,6 +129,31 @@ var Visualization = {
       if (!d3.event.active) simulation.alphaTarget(0);
       d.fx = null;
       d.fy = null;
+    }
+    function mouseover(d, i) {
+      circle.style("stroke", function(o) {
+        return isConnected(d.id, o.id) ? "black" : "white";
+      });
+      link.style("stroke-opacity", function(o) {
+        return o.source.index == d.index || o.target.index == d.index ? 1.0 : 0.6;
+      });
+      link.style("stroke", function(o) {
+        return o.source.index == d.index || o.target.index == d.index ? "blue" : d3.rgb(153, 153, 153);
+      });
+      /*
+      chord.classed("fade", function(p) {
+        return p.source.index != i
+            && p.target.index != i;
+      });*/
+    }
+
+    function mouseout(d, i) {
+      circle.style("stroke", function(o) {
+        return "white";
+      });
+      link.style("stroke-opacity", function(o) {
+        return 0.6;
+      });
     }
   }
 };
