@@ -11,20 +11,22 @@ def makeSuggestion(firstCourse,secondCourse,thirdCourse):
 
 	with open (path + os.sep + "new_data.txt") as f:
 		for line in f:
-			a.append(line.strip().split(" "))
+			if a != '': a.append(line.strip().split(" "))
+
 
 	courseDict = dict()
 	for i in range(len(a)):
+		if len(a[i]) <= 3: print("Wow: ", a[i])
+
 		diffList = []
 		diff = 0
-		if not a[i][0] in userSet:
+		if a[i][0] not in userSet:
 			diffList.append(a[i][0])
 
-		if not a[i][1] in userSet:
+		if a[i][1] not in userSet:
 			diffList.append(a[i][1])
 
-
-		if not a[i][2] in userSet:
+		if a[i][2] not in userSet:
 			diffList.append(a[i][2])
 
 		if len(diffList) == 3:
@@ -43,7 +45,7 @@ def makeSuggestion(firstCourse,secondCourse,thirdCourse):
 	ret = sorted(courseDict,key = courseDict.get,reverse=True)
 
 	with open (path + os.sep + "new_data.txt", "a") as f:
-		f.write("\n" + firstCourse + " " + secondCourse + " " + thirdCourse )
+		f.write(firstCourse + " " + secondCourse + " " + thirdCourse + "\n")
 
 	return ret[0]
 
