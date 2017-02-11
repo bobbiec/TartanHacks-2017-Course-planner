@@ -5,6 +5,7 @@ var Visualization = {
 
   init: function() {
     var svg = d3.select('svg');
+
     svg.append("text")
         .attr("x", 50)
         .attr("y", 50)
@@ -29,6 +30,7 @@ var Visualization = {
     var svg = d3.select("svg"),
         width = +svg.attr("width"),
         height = +svg.attr("height");
+
     svg.select('text').remove();
 
     var color = d3.scaleOrdinal(d3.schemeCategory20);

@@ -11,19 +11,64 @@
 .main {
   display: -webkit-flex;
   display: flex;
-  margin-top: 50px;
+  margin-top: 0px;
 }
 .sidebar {
   width: 300px;
-  margin-right: 25px;
+  margin-right: 0px;
   border-style: solid;
-  border-color: grey;
+  border-color: #d1e2ff;
   border-width: 0px 1px 0px 0px;
   padding: 0px 25px;
-
+  height:100%;
 }
 
 .graphic {
   -webkit-flex: 1;
   flex: 1;
+}
+
+.head {
+  background-color: #ffffff;
+  color: #ffffff;
+  border-width: 1px;
+  border-color: #000000;
+  border-style:solid;
+  margin: 0px;
+}
+.auditBox{
+  margin-top: 10px;
+}
+
+.submission{
+  margin-top:3px;
+
+}
+
+a { 
+  color: #000000;
+}
+
+/* unvisited link */
+a:link {
+    color: black;
+    text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+/* selected link */
+a:active {
+    color: black;
+    text-decoration: none;
 }
