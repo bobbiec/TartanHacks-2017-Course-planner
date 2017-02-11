@@ -51,22 +51,54 @@ var Graph = {
   },
 
   make_graph_for_user: function(courses_taken) {
-    var course_list = this.data.course_info['courses'];
-    var future_courses = _.flatMap(courses_taken, function(course) {
-      if (!(course in course_list)) {
-        return [];
-      }
-      return course_list[course]['prereq-for'];
+    var taken_map = {};
+    var future_map = {};
+    _.map(courses_taken, function(course) {
+      taken_map[course] = true;
     });
+
+    var course_list = this.data.course_info['courses'];
+    courses_taken = _.filter(courses_taken, function(course) {
+      return (course in course_list);
+    });
+    console.log(courses_taken);
+    var future_courses = _.flatMap(courses_taken, function(course) {
+      var has_prereq = course_list[course]['prereq-for'];
+      var result = _.filter(has_prereq, function(req_course) {
+        var pre = course_list[req_course]['prereqs_obj'];
+        if (pre['invert'] == null) {
+          return false;
+        }
+        if (pre['invert']) {
+          var reqs = pre['reqs_list'];
+          var has_all_reqs = true;
+          for (var i = 0; i < reqs.length; i++) {
+            var has_any = false;
+            for (var j = 0; j < reqs[i].length; j++) {
+              if (taken_map[reqs[i][j]]) {
+                has_any = true;
+              }
+            }
+            if (!has_any) {
+              has_all_reqs = false;
+            }
+          }
+          return has_all_reqs;
+        }
+        return true;
+      });
+      return result;
+    });
+
     future_courses = _.difference(_.uniq(future_courses), courses_taken);
+    _.map(future_courses, function(course) {
+      future_map[course] = true;
+    });
+
     var graph = {
       'nodes': [],
       'links': []
     };
-    var taken_map = {};
-    _.map(courses_taken, function(course) {
-      taken_map[course] = true;
-    });
     graph['nodes'] = _.map(_.concat(courses_taken, future_courses), function(course) {
       return {
         "id": course,
@@ -77,11 +109,15 @@ var Graph = {
     _.map(graph['nodes'], function(course) {
       if (course['taken']) {
         _.map(course_list[course['id']]['prereq-for'], function(req) {
+          if (!future_map[req]) {
+            return;
+          }
           graph['links'].push({
             "source": course["id"],
             "target": req,
             "value": 1
           });
+          console.log('here');
         });
       }
     });
@@ -96,7 +132,7 @@ var User = {
 
   init: function() {
     this.data.name = 'Boby Chan';
-    this.process_user_courses(['15-451', '15-251'], {});
+    this.process_user_courses(["76-101", "21-120", "33-111", "99-101", "73-100", "21-122", "33-112", "09-105", "15-112", "82-231", "76-012", "79-211", "15-122", "15-150", "15-210", "15-213", "15-251"], {});
   },
 
   process_user_courses: function(courses_taken, unfilled) {
