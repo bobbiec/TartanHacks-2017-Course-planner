@@ -20,7 +20,8 @@
   border-color: #d1e2ff;
   border-width: 0px 1px 0px 0px;
   padding: 0px 25px;
-  height:100%;
+  height: 760px;
+  overflow-y: scroll;
 }
 
 .graphic {
@@ -45,7 +46,7 @@
 
 }
 
-a { 
+a {
   color: #000000;
 }
 
