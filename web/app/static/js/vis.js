@@ -14,6 +14,7 @@ var Visualization = {
   make_visualization: function(graph){
     var self = Visualization;
 
+    var radius = 18;
 
     var svg = d3.select("svg"),
         width = +svg.attr("width"),
@@ -23,10 +24,20 @@ var Visualization = {
     var color = d3.scaleOrdinal(d3.schemeCategory20);
 
     var simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(150))
-        .force("charge", d3.forceManyBody(1))
+        .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(function(d) {
+          var ratio = Math.sqrt(d.source.links)/ Math.sqrt(9);
+          return Math.max(40, ratio * 60);
+        }).strength(function(d) {
+          return 1 / Math.min(d.source.links, 5 * d.target.links);
+        }))
         .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("collide", d3.forceCollide(25));
+        .force("collide", d3.forceCollide(radius))
+        .force('charge', d3.forceManyBody().strength(function(d){
+          if(d.taken) {
+            return -50;
+          }
+          return -20;
+        }).distanceMax(400));
 
     var link = svg.append("g")
         .attr("class", "links")
@@ -45,7 +56,7 @@ var Visualization = {
             .on("end", dragended));
 
     node.append("circle")
-        .attr("r", 25)
+        .attr("r", radius)
         .attr("fill", function(d) {
           if (d.fills != null) {
             return d3.rgb(90, 152, 252);
@@ -56,8 +67,9 @@ var Visualization = {
          return d3.rgb(180, 180, 180);
         });
     node.append("text")
-        .attr("dx", -22)
+        .attr("dx", -15)
         .attr("dy", ".35em")
+        .attr('font-size', "9px")
         .text(function(d) {return d.id});
 
     node.append("title")
@@ -72,7 +84,7 @@ var Visualization = {
         .nodes(graph.nodes)
         .on("tick", ticked);
 
-    simulation.force("link")
+      simulation.force("link")
         .links(graph.links);
 
     function ticked() {
@@ -83,7 +95,11 @@ var Visualization = {
           .attr("y2", function(d) { return d.target.y; });
 
       node
-          .attr("transform", function(d) {return "translate(" + d.x + "," + d.y + ")"; });
+          .attr("transform", function(d) {
+            d.x = Math.min(width - radius, Math.max(radius, d.x));
+            d.y = Math.min(height - radius, Math.max(radius, d.y));
+            return "translate(" + d.x + "," + d.y
+            + ")"; });
     }
 
     function dragstarted(d) {
