@@ -110,8 +110,40 @@ var Visualization = {
     simulation.force("link")
         .links(graph.links);
 
+    function node_in(nodes, node) {
+      var found = false;
+      _.forEach(nodes, function(comp) {
+        if (comp.id == node.id) {
+          console.log('here');
+          found = true;
+        }
+      });
+      return found;
+    }
+
+    function link_in(links, link) {
+      var found = false;
+      _.forEach(links, function(comp) {
+        if (comp.source == link.source && comp.target == link.target) {
+          found = true;
+        }
+      });
+      return found;
+    }
+
     function restart(graph) {
-      self.data.graph = graph;
+      _.forEach(graph.nodes, function(node) {
+        if (!node_in(self.data.graph.nodes, node)) {
+          self.data.graph.nodes.push(node);
+        }
+      });
+
+      _.forEach(graph.links, function(link) {
+        if (!link_in(self.data.graph.links, link)) {
+          self.data.graph.links.push(link);
+        }
+      });
+
       var graph = self.data.graph;
 
       node = node.data(graph.nodes);
