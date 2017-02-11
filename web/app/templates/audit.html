@@ -1,0 +1,17 @@
+<script>
+var auditText = {{ json|tojson }};
+var auditObject = JSON.parse(auditText);
+</script>
+
+
+<form action="audit" method="post">
+
+<textarea name="audit" rows="4" cols="50">
+Paste your academic audit here
+</textarea>
+
+<input type="submit" value="Submit">
+
+</form>
+
+{{ humanReadable }}

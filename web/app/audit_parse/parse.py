@@ -1,10 +1,14 @@
+import os
 import re
 import json
+
+full_path = os.path.realpath(__file__)
+path = os.path.dirname(full_path)
 
 # Read CIT general ed lists from file
 cit = {"ppc":"","sdm":"", "i&i":"", "w&e":""}
 for category in cit:
-    with open("cit_%s.csv" % category) as f:
+    with open(path + os.sep + "cit_%s.csv" % category) as f:
         cit[category] = f.read().split(",")
 
 # Hardcoded list of requirements
@@ -115,32 +119,36 @@ but excess units from courses greater than 9 units may not
 be used to satisfy these or other requirements.
 """
 
-matches = re.findall(r"\d\d-\d\d\d", audit)
+def parseAudit(audit):
+    matches = re.findall(r"\d\d-\d\d\d", audit)
 
-jsonOutput = {"finished": matches, 
-              "unfinished": []}
+    jsonOutput = {"finished": matches, 
+                  "unfinished": []}
 
-humanOutput = """You have taken:
-\t%s
+    humanOutput = """You have taken:
+    \t%s
 
-Unfinished requirements:
-""" % ", ".join(matches)
+    Unfinished requirements:
+    """ % ", ".join(matches)
 
-for line in audit.split("\n"):
-    if line.find("unfilled") != -1:
-        start = line.find(".") + 1
-        end = line.find(":")
-        reqname = line[start:end].strip()
+    for line in audit.split("\n"):
+        if line.find("unfilled") != -1:
+            start = line.find(".") + 1
+            end = line.find(":")
+            reqname = line[start:end].strip()
 
-        reqObject = {reqname: meche[reqname]}
-        jsonOutput["unfinished"].append(reqObject)
+            reqObject = {reqname: meche[reqname]}
+            jsonOutput["unfinished"].append(reqObject)
 
-        humanOutput += "\t" + reqname + "\n"
-        humanOutput += "\t\t" + str(meche[reqname]) + "\n"
+            humanOutput += "\t" + reqname + "\n"
+            humanOutput += "\t\t" + str(meche[reqname]) + "\n"
 
-with open("output_audit.txt", "w") as f:
-	f.write(humanOutput)
+    return json.dumps(jsonOutput), humanOutput
 
-with open("output_audit.json", "w") as f:
-	json.dump(jsonOutput, f)
+if __name__ == "__main__":
+    jsonOutput, humanOutput = parseAudit(audit)
+    with open("output_audit.txt", "w") as f:
+        f.write(humanOutput)
+    with open("output_audit.json", "w") as f:
+        json.dump(jsonOutput, f)
 
