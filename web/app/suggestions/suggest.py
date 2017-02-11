@@ -1,10 +1,15 @@
-def makeSuggestion(firstCourse,secondCourse,thirdCourse)
+import os
+
+full_path = os.path.realpath(__file__)
+path = os.path.dirname(full_path)
+
+def makeSuggestion(firstCourse,secondCourse,thirdCourse):
 	a = []
 
 	userSet = {firstCourse, secondCourse, thirdCourse}
 	takenCourses = {"15-112"}
 
-	with open ("data.txt") as f:
+	with open (path + os.sep + "data.txt") as f:
 		for line in f:
 			a.append(line.strip().split(" "))
 
@@ -36,6 +41,9 @@ def makeSuggestion(firstCourse,secondCourse,thirdCourse)
 					courseDict[item] = courseDict.setdefault(item, 0.0) + 1
 
 	ret = sorted(courseDict,key = courseDict.get,reverse=True)
+
+	with open (path + os.sep + "data.txt", "a") as f:
+		f.write("\n" + firstCourse + " " + secondCourse + " " + thirdCourse )
 
 	return ret[0]
 
