@@ -8,7 +8,7 @@ var Visualization = {
     svg.append("text")
         .attr("x", 50)
         .attr("y", 50)
-        .text(function(d) {return "go away we are loading"});
+        .text(function(d) {return "loading boby chan's schedule"});
   },
 
   make_visualization: function(graph){
@@ -47,8 +47,11 @@ var Visualization = {
     node.append("circle")
         .attr("r", 25)
         .attr("fill", function(d) {
+          if (d.fills != null) {
+            return d3.rgb(90, 152, 252);
+          }
           if (d.taken) {
-            return d3.rgb(138, 206, 11)
+            return d3.rgb(138, 206, 11);
           }
          return d3.rgb(180, 180, 180);
         });
@@ -56,6 +59,14 @@ var Visualization = {
         .attr("dx", -22)
         .attr("dy", ".35em")
         .text(function(d) {return d.id});
+
+    node.append("title")
+        .text(function(d) {
+          if (d.fills) {
+            return "Fills: " + d.fills;
+          }
+          return "Does not fulfill any addition requirements.";
+        });
 
     simulation
         .nodes(graph.nodes)
