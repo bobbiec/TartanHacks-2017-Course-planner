@@ -13,21 +13,12 @@ var Graph = {
   load_data: function() {
     var self = this;
 
-    var url = 'https://s3-us-west-2.amazonaws.com/tartanhacks/data.jsonp';
-    $.ajax({
-      url: url,
-      type: 'GET',
-      dataType: 'jsonp',
-      jsonpCallback: 'callback',
-      success: function(course_info) {
-        self.data.course_info = course_info;
-        self.process_data();
-        if (self.callback) { // Hacky solution since data takes so long to load
-          self.callback();
-          self.callback = null;
-        }
-      }
-    })
+    self.data.course_info = db;
+    self.process_data();
+    if (self.callback) {
+      self.callback();
+      self.callback = null;
+    }
   },
 
   process_data: function() {
@@ -67,6 +58,9 @@ var Graph = {
     var future_courses = _.flatMap(courses_taken, function(course) {
       var has_prereq = course_list[course]['prereq-for'];
       var result = _.filter(has_prereq, function(req_course) {
+        if (course == '76-101') {
+          return false;
+        }
         var pre = course_list[req_course]['prereqs_obj'];
         if (pre['invert'] == null) {
           return false;
@@ -140,7 +134,6 @@ var Graph = {
             "target": req,
             "value": 1
           });
-          console.log('here');
         });
       }
     });
@@ -187,7 +180,6 @@ var User = {
 
   update: function() {
     if (auditObject) {
-      console.log("wow");
       this.process_user_courses(auditObject.finished, auditObject.unfinished);
     }
   },
