@@ -13,6 +13,7 @@ def makeSuggestion(firstCourse,secondCourse,thirdCourse):
 		for line in f:
 			a.append(line.strip().split(" "))
 
+	print(a)
 	courseDict = dict()
 	for i in range(len(a)):
 		diffList = []
