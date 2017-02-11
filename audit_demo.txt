@@ -1,0 +1,60 @@
+For BS in Mechanical Engineering, 2012 Catalog Year
+--------------------------------------------------------------
+ 1. Interp and Argument         : 76-101 Spring '16 A     9.0    
+ 2. Writing and Expression      : 80-180 Spring '17 *     9.0    
+ 3. Diff/Integral Calculus      : 21-120 Fall   '15 AP   10.0    
+ 4. Fund. of M.E.               : 24-101 Fall   '15 B    12.0    
+ 5. Physics I                   : 33-106 Fall   '15 AP   12.0    
+ 6. Computing @ Carnegie Mellon : 99-101 Fall   '15 P     3.0    
+--------------------------------------------------------------
+ 7. FY General Education Course : 82-172 Spring '16 A    12.0    
+ 8. Diff Eq and Calc of Approx  : 21-122 Fall   '15 AP   10.0    
+ 9. Physics II                  : 33-142 Spring '17 *    12.0    
+10. Intro. Engineering Elective : 18-100 Spring '16 B    12.0    
+--------------------------------------------------------------
+11. Innovation and International:9.00 unfilled Units
+12. Modern Chemistry I          : 09-105 Fall   '15 AP   10.0    
+13. Chemistry Lab               :1 unfilled course
+14. Calculus in 3D              : 21-259 Fall   '15 A     9.0    
+15. Thermodynamics I            : 24-221 Fall   '16 A    10.0    
+16. Statics                     : 24-261 Fall   '16 A    10.0    
+--------------------------------------------------------------
+17. Programming                 : 15-112 Fall   '15 B    12.0    
+18. Differential Equations      : 21-260 Fall   '16 B     9.0    
+19. Fluid Mechanics             : 24-231 Spring '17 *    10.0    
+20. Stress Analysis             : 24-262 Spring '17 *    12.0    
+21. Machine Shop Pract          : 24-200 Fall   '16 P     1.0    
+22. Intro to CAD                : 24-202 Fall   '16 P     1.0    
+--------------------------------------------------------------
+23. Seminar I                   :1 unfilled course
+24. Design I                    :1 unfilled course
+25. Heat Transfer               :1 unfilled course
+26. Dynamics                    :1 unfilled course
+27. Eng Stats and Qual. Control :1 unfilled course
+-------------------------------------------------------------
+28. Numerical Methods           : 24-311 Spring '17 *    12.0    
+29. Thermal - Fluids Exp.       :1 unfilled course
+30. Dyn. Systems & Control      :1 unfilled course
+--------------------------------------------------------------
+31. Design II                   :1 unfilled course
+32. Mechanical Systems Exp.     :1 unfilled course
+33. MechE Technical Elective    :1 unfilled course
+---------------------------------------------------------------
+34. People Places and Cultures  : 82-271 Fall   '16 B    12.0    
+35. Soc Analysis and Dec Making :9.00 unfilled Units
+36. Gen Ed Electives            : 82-171 Fall   '15 A    12.0    
+37. Experiential Learning I     : 39-210 Fall   '16 P     0.0    
+38. Experiential Learning II    : 39-220 Spring '17 *     0.0    
+39. Experiential Learning III   :1 unfilled course
+40. Elective 1                  : 21-127 Spring '16 A    10.0    
+41. Elective 2                  : 15-122 Spring '16 B    10.0    
+42. Elective 3                  : 15-251 Fall   '16 B    12.0    
+43. Elective 4                  : 03-151 Fall   '15 AP   9.0  
+44. Free Electives              : 15-150 Spring '17 *    10.0    
+NOTE: GenEd requirements (1,2,7,11,34-36) must be satisfied
+by completing 8 courses of at least 9 units each. Mini courses
+of fewer than 9 units may be combined to equal 9 unit courses,
+but excess units from courses greater than 9 units may not
+be used to satisfy these or other requirements.
+Not Matched:
+ 36-201 Fall   '15 AP    9.0     (Unused)
