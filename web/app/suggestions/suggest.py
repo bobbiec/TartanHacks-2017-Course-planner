@@ -14,10 +14,9 @@ def makeSuggestion(firstCourse,secondCourse,thirdCourse):
 			if a != '': a.append(line.strip().split(" "))
 
 
-	print(a)
+	#print(a)
 	courseDict = dict()
 	for i in range(len(a)):
-
 		diffList = []
 		diff = 0
 		if a[i][0] not in userSet:
