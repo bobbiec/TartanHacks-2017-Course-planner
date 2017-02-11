@@ -8,14 +8,17 @@ from .suggestions import makeSuggestion
 def index():
     json = "{}"
     text = 'Paste your academic audit here'
+    suggestion = ''
     if request.method == "POST":
         text = request.form['audit']
         json, humanReadable = parseAudit(text)
-    return render_template('index.html', json=json, textbox=text)
+    return render_template('index.html', json=json, textbox=text, suggestOutput=suggestion)
 
 @instance.route('/suggest', methods=['GET','POST'])
 def suggest():
-	suggestion = ''
-	if request.method == "POST":
-		suggestion  = makeSuggestion(request.form['firstCourse'], request.form['secondCourse'], request.form['thirdCourse'])
-	return render_template('suggest.html',suggestOutput=suggestion)
+    json = "{}"
+    text = 'Paste your academic audit here'
+    suggestion = ''
+    if request.method == "POST":
+        suggestion  = makeSuggestion(request.form['firstCourse'], request.form['secondCourse'], request.form['thirdCourse'])
+    return render_template('index.html', json=json, textbox=text, suggestOutput=suggestion)
