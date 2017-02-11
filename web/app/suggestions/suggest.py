@@ -46,7 +46,7 @@ def makeSuggestion(firstCourse,secondCourse,thirdCourse):
 	with open (path + os.sep + "new_data.txt", "a") as f:
 		f.write(firstCourse + " " + secondCourse + " " + thirdCourse + "\n")
 
-	return ret[0]
+	return ret[:5]
 
 
 

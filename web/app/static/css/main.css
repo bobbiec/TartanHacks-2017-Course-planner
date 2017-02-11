@@ -23,7 +23,8 @@
   padding: 0px 25px;
   height: 760px;
   overflow-y: scroll;
-  position: relative;;
+  position: relative;
+  background: #f7d08a;
 }
 
 .sidebar-content {
@@ -48,7 +49,6 @@
   margin: 0px;
 }
 .auditBox{
-  color: #f7d08a;
   background-color: #f7d08a;
   margin-top: 10px;
 }
