@@ -8,16 +8,32 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <title>DINEXCHANGE(THE REAL DEAL)</title>
+    <script>
+      var auditText = {{ json|tojson }};
+      var auditObject = JSON.parse(auditText);
+      var courses_taken = auditObject.finished;
+      var unfilled = auditObject.unfinished;
+    </script>
   </head>
 
   <body>
+    rofl
   <div class="main">
     <div class="sidebar">
     <p id="name">asdf</p>
     </div>
     <div class="graphic"><svg width="900" height="600"></svg></div>
   </div>
+
+  <form action="index" method="post">
+  <textarea name="audit" rows="4" cols="50">
+  {{ textbox }}
+  </textarea>
+  <input type="submit" value="Submit">
+  </form>
+
   </body>
+
   <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="

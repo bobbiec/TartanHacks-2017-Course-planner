@@ -145,6 +145,33 @@ var Graph = {
       }
     });
   Visualization.make_visualization(graph);
+  },
+
+  update_sidebar: function(course_number) {
+    var self = this;
+
+    var course_list = self.data.course_info['courses'];
+
+    var desc = course_list[course_number];
+    console.log(desc);
+
+    var sidebar = $('.sidebar');
+    sidebar.empty();
+
+    var name = $('<h3></h3>').text(desc['name']);
+    sidebar.append(name);
+
+    var units = $('<p></p>').text('Units: ' + desc['units']);
+    sidebar.append(units);
+
+    var info = $('<p></p>').text(desc['desc']);
+    sidebar.append(info);
+
+    var pre = $('<p></p>').text('Prerequisites: ' + (desc['prereqs'] ? desc['prereqs'] : 'None'));
+    sidebar.append(pre);
+
+    var co = $('<p></p>').text('Corequisites: ' + (desc['coreqs'] ? desc['coreqs'] : 'None'));
+    sidebar.append(co);
   }
 };
 
@@ -156,6 +183,13 @@ var User = {
   init: function() {
     this.data.name = 'Boby Chan';
     this.process_user_courses(["21-120", "33-111", "99-101", "73-100", "21-122", "33-112", "09-105", "15-112", "82-231", "76-012", "79-211", "15-122", "15-150", "15-210", "15-213", "15-251"], test_reqs);
+  },
+
+  update: function() {
+    if (auditObject) {
+      console.log("wow");
+      this.process_user_courses(auditObject.finished, auditObject.unfinished);
+    }
   },
 
   process_user_courses: function(courses_taken, unfilled) {
@@ -183,11 +217,12 @@ var User = {
     var data = self.data;
     Graph.make_graph_for_user(data.courses_taken, data.unfilled);
   }
-
 };
+
 
 (function() {
   User.init();
+  User.update();
   Graph.init();
   Visualization.init();
 })();

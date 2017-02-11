@@ -13,7 +13,7 @@ var Visualization = {
 
   make_visualization: function(graph){
     var self = Visualization;
-
+    var selected = null;
 
     var linkedByIndex = {};
     _.map(graph.links, function(d) {
@@ -47,7 +47,7 @@ var Visualization = {
             return -50;
           }
           return -20;
-        }).distanceMax(400));
+        }).distanceMax(600));
 
     var link = svg.append("g")
         .attr("class", "links")
@@ -65,7 +65,8 @@ var Visualization = {
             .on("drag", dragged)
             .on("end", dragended))
         .on("mouseover", mouseover)
-        .on("mouseout", mouseout);
+        .on("mouseout", mouseout)
+        .on("click", mouseclick);
 
     var circle = node.append("circle")
         .attr("r", radius)
@@ -89,7 +90,9 @@ var Visualization = {
           if (d.fills) {
             return "Fills: " + d.fills;
           }
-          return "Does not fulfill any addition requirements.";
+          else if (!d.taken) {
+            return "Does not fulfill any additional requirements.";
+          }
         });
 
     simulation
@@ -130,7 +133,13 @@ var Visualization = {
       d.fx = null;
       d.fy = null;
     }
+
     function mouseover(d, i) {
+      // this whole selected stuff is kind of broken right now
+      if (selected != null && d.id != selected.id) {
+        selected = null;
+      }
+
       circle.style("stroke", function(o) {
         return isConnected(d.id, o.id) ? "black" : "white";
       });
@@ -153,5 +162,13 @@ var Visualization = {
         return d3.rgb(153, 153, 153);
       });
     }
+
+    function mouseclick(d, i) {
+      Graph.update_sidebar(d.id);
+      selected = d;
+    }
+
+
+    // Trigger a mousedown on a node for several seconds to spread out the graph?
   }
 };
