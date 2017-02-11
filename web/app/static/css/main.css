@@ -1,3 +1,4 @@
+
 .links line {
   stroke: #999;
   stroke-opacity: 0.6;
@@ -18,26 +19,28 @@
   margin-right: 0px;
   border-style: solid;
   border-color: #d1e2ff;
-  border-width: 0px 1px 0px 0px;
+  border-width: 0px 0px 0px 0px;
   padding: 0px 25px;
   height: 760px;
   overflow-y: scroll;
+  background: #f7d08a;
 }
 
 .graphic {
   -webkit-flex: 1;
   flex: 1;
+  background: #8cdcda;
 }
 
 .head {
-  background-color: #ffffff;
+  background:#f79f79;
   color: #ffffff;
-  border-width: 1px;
-  border-color: #000000;
   border-style:solid;
   margin: 0px;
 }
 .auditBox{
+  color: #f7d08a;
+  background-color: #f7d08a;
   margin-top: 10px;
 }
 
