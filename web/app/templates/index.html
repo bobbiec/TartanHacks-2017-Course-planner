@@ -47,13 +47,16 @@
   <body>
   <div class="main">
     <div class="sidebar">
-      <div class="sidebar-content"></div>
-      <form action="index" method="post">
-        <textarea name="audit" rows="4" cols="30" class="form-control auditBox">
-        {{ textbox }}
-        </textarea>
-        <input type="submit" value="Submit" class="btn btn-info btn-block submission">
-      </form>
+      <div class="sidebar-content">
+        Select a course to view unit count and description. 
+      </div>
+      <div class="sidebar-audit">
+        <h3>Import Courses</h3>
+        <form action="index" method="post">
+          <textarea name="audit" rows="4" cols="30" class="form-control auditBox">{{- textbox -}}</textarea>
+          <input type="submit" value="Submit" class="btn btn-info btn-block submission">
+        </form>
+      </div>
     </div>
 
     <div class="graphic"><svg width="966" height="760"></svg></div>

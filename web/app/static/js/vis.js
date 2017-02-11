@@ -5,16 +5,12 @@ var Visualization = {
 
   init: function() {
     var svg = d3.select('svg');
-
-    svg.append("text")
-        .attr("x", 50)
-        .attr("y", 50)
-        .text(function(d) {return "loading boby chan's schedule"});
   },
 
   make_visualization: function(graph){
     var self = Visualization;
     var selected = null;
+    var alpha_target = 0.05;
 
     var linkedByIndex = {};
     _.map(graph.links, function(d) {
@@ -31,8 +27,6 @@ var Visualization = {
         width = +svg.attr("width"),
         height = +svg.attr("height");
 
-    svg.select('text').remove();
-
     var color = d3.scaleOrdinal(d3.schemeCategory20);
 
     var simulation = d3.forceSimulation()
@@ -48,8 +42,16 @@ var Visualization = {
           if(d.taken) {
             return -50;
           }
-          return -20;
-        }).distanceMax(600));
+          return -16;
+        }).distanceMax(500));
+    simulation.alphaDecay(0.01)
+              .velocityDecay(0.5)
+              .alphaTarget(alpha_target);
+
+    setTimeout(function(){
+        alpha_target = 0;
+        simulation.alphaTarget(alpha_target);
+    }, 10000);
 
     var link = svg.append("g")
         .attr("class", "links")
@@ -131,7 +133,7 @@ var Visualization = {
     }
 
     function dragended(d) {
-      if (!d3.event.active) simulation.alphaTarget(0);
+      if (!d3.event.active) simulation.alphaTarget(alpha_target);
       d.fx = null;
       d.fy = null;
     }
@@ -169,8 +171,5 @@ var Visualization = {
       Graph.update_sidebar(d.id);
       selected = d;
     }
-
-
-    // Trigger a mousedown on a node for several seconds to spread out the graph?
   }
 };

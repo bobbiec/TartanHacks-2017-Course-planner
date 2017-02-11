@@ -23,6 +23,15 @@
   padding: 0px 25px;
   height: 760px;
   overflow-y: scroll;
+  position: relative;;
+}
+
+.sidebar-content {
+  padding-top:25px;
+}
+
+.sidebar-bottom {
+  margin-bottom: 25px;
   background: #f7d08a;
 }
 
