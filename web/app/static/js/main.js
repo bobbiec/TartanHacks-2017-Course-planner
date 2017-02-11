@@ -71,7 +71,7 @@ var Graph = {
         if (pre['invert'] == null) {
           return false;
         }
-        if (pre['invert']) {
+        if (!pre['invert']) {
           var reqs = pre['reqs_list'];
           var has_all_reqs = true;
           for (var i = 0; i < reqs.length; i++) {
@@ -115,12 +115,16 @@ var Graph = {
       'nodes': [],
       'links': []
     };
+    var course_data_map = {};
     graph['nodes'] = _.map(_.concat(courses_taken, future_courses), function(course) {
-      return {
+      var course_data = {
         "id": course,
         "taken": taken_map[course],
-        "fills": taken_map[course] ? null : unfilled[course]
+        "fills": taken_map[course] ? null : unfilled[course],
+        "links": 0
       };
+      course_data_map[course] = course_data;
+      return course_data;
     });
 
     _.map(graph['nodes'], function(course) {
@@ -129,6 +133,8 @@ var Graph = {
           if (!future_map[req]) {
             return;
           }
+          course_data_map[course['id']].links += 1;
+          course_data_map[req].links += 1;
           graph['links'].push({
             "source": course["id"],
             "target": req,
@@ -149,7 +155,7 @@ var User = {
 
   init: function() {
     this.data.name = 'Boby Chan';
-    this.process_user_courses(["76-101", "21-120", "33-111", "99-101", "73-100", "21-122", "33-112", "09-105", "15-112", "82-231", "76-012", "79-211", "15-122", "15-150", "15-210", "15-213", "15-251"], test_reqs);
+    this.process_user_courses(["21-120", "33-111", "99-101", "73-100", "21-122", "33-112", "09-105", "15-112", "82-231", "76-012", "79-211", "15-122", "15-150", "15-210", "15-213", "15-251"], test_reqs);
   },
 
   process_user_courses: function(courses_taken, unfilled) {
