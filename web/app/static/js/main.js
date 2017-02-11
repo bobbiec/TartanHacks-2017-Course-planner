@@ -209,10 +209,31 @@ var User = {
   }
 };
 
+var Suggest = {
+  init: function() {
+    $('#suggest').click(function () {
+      var first = $('#firstCourse').val();
+      var second = $('#secondCourse').val();
+      var third = $('#thirdCourse').val();
+      $.ajax({
+        type: 'POST',
+        url: '/suggest',
+        dataType: 'json',
+        data: JSON.stringify({'info': [first, second, third]}, null, '\t'),
+        contentType: 'application/json;charset=UTF-8',
+        success: function(result) {
+          console.log(result);
+          $('#suggest_output').text(result);
+        }
+      })
+    });
+  }
+};
 
 (function() {
   User.init();
   User.update();
   Graph.init();
   Visualization.init();
+  Suggest.init();
 })();
