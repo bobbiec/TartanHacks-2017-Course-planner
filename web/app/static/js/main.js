@@ -43,7 +43,7 @@ var Graph = {
     });
   },
 
-  make_graph_for_user: function(courses_taken, unfilled) {
+  make_graph_for_user: function(courses_taken, unfilled, update_only) {
     var taken_map = {};
     var future_map = {};
     _.map(courses_taken, function(course) {
@@ -109,6 +109,7 @@ var Graph = {
       'nodes': [],
       'links': []
     };
+
     var course_data_map = {};
     graph['nodes'] = _.map(_.concat(courses_taken, future_courses), function(course) {
       var course_data = {
@@ -137,17 +138,31 @@ var Graph = {
         });
       }
     });
-    Visualization.make_visualization(graph);
+    if (!update_only) {
+      Visualization.make_visualization(graph);
+    }
+    return graph;
   },
 
-  update_sidebar: function(course_number) {
-    var course_list = this.data.course_info['courses'];
+  update_sidebar: function(course_number, add_course_callback) {
+    var self = Graph;
+    var course_list = self.data.course_info['courses'];
 
     var desc = course_list[course_number];
     console.log(desc);
 
     var sidebar = $('.sidebar-content');
     sidebar.empty();
+
+    if (!_.includes(courses_taken, course_number)) {
+      var add_course = $('<input type="submit" value="Add Course" class="btn btn-info btn-block" id="add-course">');
+      sidebar.append(add_course);
+      add_course.click(function() {
+        User.data.courses_taken.push(course_number);
+        var graph = self.make_graph_for_user(User.data.courses_taken, User.data.unfilled, true);
+        add_course_callback(graph);
+      });
+    }
 
     var name = $('<h3></h3>').text(desc['name']);
     sidebar.append(name);
@@ -222,7 +237,6 @@ var Suggest = {
         data: JSON.stringify({'info': [first, second, third]}, null, '\t'),
         contentType: 'application/json;charset=UTF-8',
         success: function(result) {
-          console.log(result);
           $('#suggest_output').text(result);
         }
       })
