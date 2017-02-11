@@ -38,20 +38,54 @@ var Graph = {
 
     _.forEach(course_list, function(course, course_num) {
       var pre = course['prereqs_obj'];
-      if (pre['invert']) {
-        var flat_pre = _.flatten(pre['reqs_list']);
-        pre = _.uniq(flat_pre);
-        _.forEach(pre, function(pre_num) {
-          if (pre_num in course_list) {
-            course_list[pre_num]['prereq-for'].push(course_num);
-          }
-        });
-      }
+      var co = course['coreqs_obj'];
+      var flat_pre = _.concat([], _.flatten(pre['reqs_list']), _.flatten(co['reqs_list']));
+
+      pre = _.uniq(flat_pre);
+      _.forEach(pre, function(pre_num) {
+        if (pre_num in course_list) {
+          course_list[pre_num]['prereq-for'].push(course_num);
+        }
+      });
     });
   },
 
-  make_graph: function() {
+  make_graph_for_user: function(courses_taken) {
+    var course_list = this.data.course_info['courses'];
+    var future_courses = _.flatMap(courses_taken, function(course) {
+      if (!(course in course_list)) {
+        return [];
+      }
+      return course_list[course]['prereq-for'];
+    });
+    future_courses = _.difference(_.uniq(future_courses), courses_taken);
+    var graph = {
+      'nodes': [],
+      'links': []
+    };
+    var taken_map = {};
+    _.map(courses_taken, function(course) {
+      taken_map[course] = true;
+    });
+    graph['nodes'] = _.map(_.concat(courses_taken, future_courses), function(course) {
+      return {
+        "id": course,
+        "taken": taken_map[course]
+      };
+    });
 
+    _.map(graph['nodes'], function(course) {
+      if (course['taken']) {
+        _.map(course_list[course['id']]['prereq-for'], function(req) {
+          graph['links'].push({
+            "source": course["id"],
+            "target": req,
+            "value": 1
+          });
+        });
+      }
+    });
+  Visualization.make_visualization(graph);
   }
 };
 
@@ -62,7 +96,7 @@ var User = {
 
   init: function() {
     this.data.name = 'Boby Chan';
-    this.process_user_courses(['21-127'], {});
+    this.process_user_courses(['15-451', '15-251'], {});
   },
 
   process_user_courses: function(courses_taken, unfilled) {
@@ -80,7 +114,7 @@ var User = {
     }
 
     var data = self.data;
-    console.log(data.courses_taken);
+    Graph.make_graph_for_user(data.courses_taken);
   }
 
 };
@@ -88,4 +122,5 @@ var User = {
 (function() {
   User.init();
   Graph.init();
+  Visualization.init();
 })();
