@@ -114,7 +114,8 @@ var Visualization = {
       var found = false;
       _.forEach(nodes, function(comp) {
         if (comp.id == node.id) {
-          console.log('here');
+          comp.taken = node.taken;
+          comp.fills = node.fills;
           found = true;
         }
       });
