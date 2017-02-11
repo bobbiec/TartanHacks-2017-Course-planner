@@ -1,6 +1,6 @@
 from flask import render_template, request
 from app import instance
-from audit_parse import parseAudit
+from .audit_parse import parseAudit
 
 @instance.route('/')
 @instance.route('/index')
