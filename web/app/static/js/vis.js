@@ -140,11 +140,6 @@ var Visualization = {
       link.style("stroke", function(o) {
         return o.source.index == d.index || o.target.index == d.index ? "blue" : d3.rgb(153, 153, 153);
       });
-      /*
-      chord.classed("fade", function(p) {
-        return p.source.index != i
-            && p.target.index != i;
-      });*/
     }
 
     function mouseout(d, i) {
@@ -153,6 +148,9 @@ var Visualization = {
       });
       link.style("stroke-opacity", function(o) {
         return 0.6;
+      });
+      link.style("stroke", function(o) {
+        return d3.rgb(153, 153, 153);
       });
     }
   }
