@@ -9,6 +9,9 @@ var Visualization = {
 
   make_visualization: function(graph){
     var self = Visualization;
+    self.data.graph = graph;
+
+    var graph = self.data.graph;
     var selected = null;
     var alpha_target = 0.05;
 
@@ -65,9 +68,9 @@ var Visualization = {
         .enter().append("g")
         .attr("class", "node")
         .call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended))
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended))
         .on("mouseover", mouseover)
         .on("mouseout", mouseout)
         .on("click", mouseclick);
@@ -83,6 +86,7 @@ var Visualization = {
           }
          return d3.rgb(180, 180, 180);
         });
+
     node.append("text")
         .attr("dx", -15)
         .attr("dy", ".35em")
@@ -103,8 +107,57 @@ var Visualization = {
         .nodes(graph.nodes)
         .on("tick", ticked);
 
-      simulation.force("link")
+    simulation.force("link")
         .links(graph.links);
+
+    function restart(graph) {
+      self.data.graph = graph;
+      var graph = self.data.graph;
+
+      node = node.data(graph.nodes);
+      node.exit().remove();
+      node = node.enter().append("g")
+        .attr("class", "node")
+        .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended))
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout)
+        .on("click", mouseclick).merge(node);
+
+      node.append("circle")
+        .attr("r", radius)
+        .attr("fill", function(d) {
+          if (d.fills != null) {
+            return d3.rgb(90, 152, 252);
+          }
+          if (d.taken) {
+            return d3.rgb(138, 206, 11);
+          }
+         return d3.rgb(180, 180, 180);
+        });
+      node.append("text")
+        .attr("dx", -15)
+        .attr("dy", ".35em")
+        .attr('font-size', "9px")
+        .text(function(d) {return d.id});
+      // Apply the general update pattern to the links.
+      link = link.data(graph.links);
+      link.exit().remove();
+      link = link.enter().append("line")
+        .attr("stroke-width", function(d) { return Math.sqrt(d.value); })
+        .merge(link);
+
+      // Update and restart the simulation.
+      simulation
+          .nodes(graph.nodes)
+          .on("tick", ticked);
+
+      simulation.force("link")
+          .links(graph.links);
+      simulation.alpha(1).restart();
+    }
 
     function ticked() {
       link
@@ -168,8 +221,12 @@ var Visualization = {
     }
 
     function mouseclick(d, i) {
-      Graph.update_sidebar(d.id);
+      Graph.update_sidebar(d.id, handle_new_course);
       selected = d;
+    }
+
+    function handle_new_course(graph) {
+      restart(graph);
     }
   }
 };
