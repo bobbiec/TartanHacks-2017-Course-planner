@@ -47,7 +47,7 @@ var Visualization = {
             return -50;
           }
           return -20;
-        }).distanceMax(400));
+        }).distanceMax(600));
 
     var link = svg.append("g")
         .attr("class", "links")
@@ -167,6 +167,7 @@ var Visualization = {
       Graph.update_sidebar(d.id);
       selected = d;
     }
+
 
     // Trigger a mousedown on a node for several seconds to spread out the graph?
   }
