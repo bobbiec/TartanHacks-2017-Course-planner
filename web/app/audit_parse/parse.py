@@ -143,7 +143,7 @@ def parseAudit(audit):
             humanOutput += "\t" + reqname + "\n"
             humanOutput += "\t\t" + str(meche[reqname]) + "\n"
 
-    return json.dumps(jsonOutput), humanOutput
+    return jsonOutput, humanOutput
 
 if __name__ == "__main__":
     jsonOutput, humanOutput = parseAudit(audit)
