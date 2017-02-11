@@ -137,7 +137,7 @@ var Graph = {
         });
       }
     });
-  Visualization.make_visualization(graph);
+    Visualization.make_visualization(graph);
   },
 
   update_sidebar: function(course_number) {
