@@ -145,6 +145,33 @@ var Graph = {
       }
     });
   Visualization.make_visualization(graph);
+  },
+
+  update_sidebar: function(course_number) {
+    var self = this;
+
+    var course_list = self.data.course_info['courses'];
+
+    var desc = course_list[course_number];
+    console.log(desc);
+
+    var sidebar = $('.sidebar');
+    sidebar.empty();
+
+    var name = $('<h3></h3>').text(desc['name']);
+    sidebar.append(name);
+
+    var units = $('<p></p>').text('Units: ' + desc['units']);
+    sidebar.append(units);
+
+    var info = $('<p></p>').text(desc['desc']);
+    sidebar.append(info);
+
+    var pre = $('<p></p>').text('Prerequisites: ' + (desc['prereqs'] ? desc['prereqs'] : 'None'));
+    sidebar.append(pre);
+
+    var co = $('<p></p>').text('Corequisites: ' + (desc['coreqs'] ? desc['coreqs'] : 'None'));
+    sidebar.append(co);
   }
 };
 

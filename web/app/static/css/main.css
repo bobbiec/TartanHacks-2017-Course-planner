@@ -7,13 +7,14 @@
   stroke: #fff;
   stroke-width: 1.5px;
 }
+
 .main {
   display: -webkit-flex;
   display: flex;
   margin-top: 50px;
 }
 .sidebar {
-  width: 200px;
+  width: 275px;
   margin-right: 25px;
   border-style: solid;
   border-color: grey;
