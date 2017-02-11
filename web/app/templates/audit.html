@@ -1,5 +1,6 @@
 <script>
-var auditInfo = JSON.parse("{{ text|tojson }}");
+var auditText = {{ json|tojson }};
+var auditObject = JSON.parse(auditText);
 </script>
 
 
@@ -13,4 +14,4 @@ Paste your academic audit here
 
 </form>
 
-{{ text }}
+{{ humanReadable }}

@@ -9,8 +9,8 @@ def index():
 
 @instance.route('/audit', methods=['GET', 'POST'])
 def audit():
-    jsonOutput = ""
-    humanOutput = ""
+    jsonOutput = ''
+    humanOutput = ''
     if request.method == "POST":
         jsonOutput, humanOutput = parseAudit(request.form['audit'])
-    return render_template('audit.html', text=jsonOutput)
+    return render_template('audit.html', json=jsonOutput, humanReadable=humanOutput)
