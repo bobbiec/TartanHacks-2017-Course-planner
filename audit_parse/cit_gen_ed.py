@@ -19,7 +19,4 @@ def getCourses():
         print("Done.")
 
 if __name__ == "__main__":
-    # getCourses()
-    with open("cit_w&e.csv") as f:
-        cit_we = f.read()
-        print(cit_we.split(","))
+    getCourses()

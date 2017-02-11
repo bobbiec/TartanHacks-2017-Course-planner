@@ -1,10 +1,13 @@
 import re
+import json
 
+# Read CIT general ed lists from file
 cit = {"ppc":"","sdm":"", "i&i":"", "w&e":""}
 for category in cit:
     with open("cit_%s.csv" % category) as f:
         cit[category] = f.read().split(",")
 
+# Hardcoded list of requirements
 meche = {
 'Interp and Argument': ['76-101'],
 'Writing and Expression': cit["w&e"],
@@ -12,7 +15,7 @@ meche = {
 'Fund. of M.E.': ['24-101'],
 'Physics I': ['33-106', '33-141', '33-151'],
 'Computing @ Carnegie Mellon': ['99-101'],
-'FY General Education Course': ["fy gened here"], # To be finished
+'FY General Education Course': ["Check the CIT website for details"], # To be finished
 'Diff Eq and Calc of Approx': ['21-260'],
 'Physics II': ['33-107', '33-142', '33-152'],
 'Intro. Engineering Elective': ['06-100', '12-100', '18-100', '27-100', '19-101', '42-101'],
@@ -41,7 +44,7 @@ meche = {
 'MechE Technical Elective': ['24-341', '24-650', '24-651', '24-674', '24-681', '24-683', '24-688', '24-354', '24-355', '24-451', '24-655', '24-657', '24-421', '24-424', '24-425', '24-615', '24-623', '24-642'],
 'People Places and Cultures': cit["ppc"],
 'Soc Analysis and Dec Making': cit["sdm"],
-'Gen Ed Electives': ["gen ed electives here"], # To be finished
+'Gen Ed Electives': ["Check the CIT website for details"], # To be finished
 'Experiential Learning I': ['39-210'],
 'Experiential Learning II': ['39-220'],
 'Experiential Learning III': ['39-310'],
@@ -113,16 +116,31 @@ be used to satisfy these or other requirements.
 """
 
 matches = re.findall(r"\d\d-\d\d\d", audit)
-print("You have taken: ")
 
-print("\t" + ", ".join(matches))
+jsonOutput = {"finished": matches, 
+              "unfinished": []}
 
-print("Unfinished requirements:")
+humanOutput = """You have taken:
+\t%s
+
+Unfinished requirements:
+""" % ", ".join(matches)
 
 for line in audit.split("\n"):
     if line.find("unfilled") != -1:
         start = line.find(".") + 1
         end = line.find(":")
         reqname = line[start:end].strip()
-        print("\t" + reqname)
-        print("\t\t" + str(meche[reqname]))
+
+        reqObject = {reqname: meche[reqname]}
+        jsonOutput["unfinished"].append(reqObject)
+
+        humanOutput += "\t" + reqname + "\n"
+        humanOutput += "\t\t" + str(meche[reqname]) + "\n"
+
+with open("output_audit.txt", "w") as f:
+	f.write(humanOutput)
+
+with open("output_audit.json", "w") as f:
+	json.dump(jsonOutput, f)
+
