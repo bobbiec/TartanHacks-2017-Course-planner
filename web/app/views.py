@@ -6,18 +6,12 @@ from .suggestions import makeSuggestion
 @instance.route('/')
 @instance.route('/index', methods=['GET', 'POST'])
 def index():
-    json = "''"
+    json = "{}"
+    text = 'Paste your academic audit here'
     if request.method == "POST":
-        json, humanReadable = parseAudit(request.form['audit'])
-    return render_template('index.html', json=json)
-
-@instance.route('/audit', methods=['GET', 'POST'])
-def audit():
-    jsonOutput = ''
-    humanOutput = ''
-    if request.method == "POST":
-        jsonOutput, humanOutput = parseAudit(request.form['audit'])
-    return render_template('audit.html', json=jsonOutput, humanReadable=humanOutput)
+        text = request.form['audit']
+        json, humanReadable = parseAudit(text)
+    return render_template('index.html', json=json, textbox=text)
 
 @instance.route('/suggest', methods=['GET','POST'])
 def suggest():

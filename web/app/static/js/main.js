@@ -187,9 +187,10 @@ var User = {
 
   update: function() {
     if (auditObject) {
+      console.log("wow");
       this.process_user_courses(auditObject.finished, auditObject.unfinished);
     }
-  }
+  },
 
   process_user_courses: function(courses_taken, unfilled) {
     var self = User;
@@ -216,8 +217,8 @@ var User = {
     var data = self.data;
     Graph.make_graph_for_user(data.courses_taken, data.unfilled);
   }
-
 };
+
 
 (function() {
   User.init();

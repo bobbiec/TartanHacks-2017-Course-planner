@@ -90,7 +90,9 @@ var Visualization = {
           if (d.fills) {
             return "Fills: " + d.fills;
           }
-          return "Does not fulfill any addition requirements.";
+          else if (!d.taken) {
+            return "Does not fulfill any additional requirements.";
+          }
         });
 
     simulation
@@ -165,5 +167,7 @@ var Visualization = {
       Graph.update_sidebar(d.id);
       selected = d;
     }
+
+    // Trigger a mousedown on a node for several seconds to spread out the graph?
   }
 };
