@@ -4,9 +4,12 @@ from .audit_parse import parseAudit
 from .suggestions import makeSuggestion
 
 @instance.route('/')
-@instance.route('/index')
+@instance.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    json = "''"
+    if request.method == "POST":
+        json, humanReadable = parseAudit(request.form['audit'])
+    return render_template('index.html', json=json)
 
 @instance.route('/audit', methods=['GET', 'POST'])
 def audit():
@@ -20,5 +23,5 @@ def audit():
 def suggest():
 	suggestion = ''
 	if request.method == "POST":
-		suggestion  = makeSuggestion(request.form['firstCourse'], request.form['secondCourse'],request.form['thirdCourse'])
+		suggestion  = makeSuggestion(request.form['firstCourse'], request.form['secondCourse'], request.form['thirdCourse'])
 	return render_template('suggest.html',suggestOutput=suggestion)

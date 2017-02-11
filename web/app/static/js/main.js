@@ -158,6 +158,12 @@ var User = {
     this.process_user_courses(["21-120", "33-111", "99-101", "73-100", "21-122", "33-112", "09-105", "15-112", "82-231", "76-012", "79-211", "15-122", "15-150", "15-210", "15-213", "15-251"], test_reqs);
   },
 
+  update: function() {
+    if (auditObject) {
+      this.process_user_courses(auditObject.finished, auditObject.unfinished);
+    }
+  }
+
   process_user_courses: function(courses_taken, unfilled) {
     var self = User;
 
@@ -188,6 +194,7 @@ var User = {
 
 (function() {
   User.init();
+  User.update();
   Graph.init();
   Visualization.init();
 })();
