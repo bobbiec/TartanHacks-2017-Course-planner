@@ -59,30 +59,29 @@
       </div>
     </div>
 
-    <div class="graphic"><svg width="966" height="760"></svg></div>
+      <div class="graphic"><svg width="966" height="635"></svg>
+      <table>
+      <tr>
+      <h3 class="sugTest">Enter three of your favorite courses to get recommendations on other courses to take! </h3>
+      
+      <td><input type="text" id="firstCourse" class="form-control form-group sug" placeholder="First Course"></td>
+      <td><input type="text" id="secondCourse" class="form-control form-group sug" placeholder="Second Course"></td>
+      <td><input type="Text" id="thirdCourse" class="form-control form-group sug" placeholder="Third Course"></td>
+      <td><input type='button' id='suggest' value="Submit" class = "btn btn-info sug" style="margin-bottom: 15px"></td>
+      
+      </tr>
+      </table>
+      <h3  style="margin-top:0px; margin-left: 20px"> Course Recommendation: 
+      <span id='suggest_output'></span>
+
+      </h3>
+
+    </div>
+
 
   </div>
 
-    <table>
-    <tr>
-    <td>
-    First Course:
-    </td>
-    <td>
-    Second Course:
-    </td>
-    <td>
-    Third Course:
-    </td>
-    <tr>
-    <td><input type="text" id="firstCourse"></td>
-    <td><input type="text" id="secondCourse"></td>
-    <td><input type="Text" id="thirdCourse"></td>
-    </tr>
-    </table>
-    <input type='button' id='suggest' value="Submit">
-
-  <div id='suggest_output'></div>
+    
 
   </body>
 

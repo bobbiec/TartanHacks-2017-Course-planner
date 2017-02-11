@@ -21,7 +21,7 @@
   border-color: #d1e2ff;
   border-width: 0px 0px 0px 0px;
   padding: 0px 25px;
-  height: 760px;
+  height: 777px;
   overflow-y: scroll;
   position: relative;
   background: #f7d08a;
@@ -56,6 +56,14 @@
 .submission{
   margin-top:3px;
 
+}
+
+.sugTest{
+  margin-left:20px;
+}
+
+table {
+  margin-left:20px;
 }
 
 a {
