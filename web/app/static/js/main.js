@@ -141,9 +141,7 @@ var Graph = {
   },
 
   update_sidebar: function(course_number) {
-    var self = this;
-
-    var course_list = self.data.course_info['courses'];
+    var course_list = this.data.course_info['courses'];
 
     var desc = course_list[course_number];
     console.log(desc);
