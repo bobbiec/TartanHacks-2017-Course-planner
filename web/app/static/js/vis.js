@@ -5,6 +5,7 @@ var Visualization = {
 
   init: function() {
     var svg = d3.select('svg');
+
     svg.append("text")
         .attr("x", 50)
         .attr("y", 50)
@@ -29,6 +30,7 @@ var Visualization = {
     var svg = d3.select("svg"),
         width = +svg.attr("width"),
         height = +svg.attr("height");
+
     svg.select('text').remove();
 
     var color = d3.scaleOrdinal(d3.schemeCategory20);
@@ -47,7 +49,7 @@ var Visualization = {
             return -50;
           }
           return -20;
-        }).distanceMax(400));
+        }).distanceMax(600));
 
     var link = svg.append("g")
         .attr("class", "links")
@@ -167,6 +169,7 @@ var Visualization = {
       Graph.update_sidebar(d.id);
       selected = d;
     }
+
 
     // Trigger a mousedown on a node for several seconds to spread out the graph?
   }

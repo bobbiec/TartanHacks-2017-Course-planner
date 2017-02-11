@@ -155,7 +155,7 @@ var Graph = {
     var desc = course_list[course_number];
     console.log(desc);
 
-    var sidebar = $('.sidebar');
+    var sidebar = $('.sidebar-content');
     sidebar.empty();
 
     var name = $('<h3></h3>').text(desc['name']);

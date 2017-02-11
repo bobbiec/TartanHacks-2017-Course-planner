@@ -14,9 +14,9 @@ def makeSuggestion(firstCourse,secondCourse,thirdCourse):
 			if a != '': a.append(line.strip().split(" "))
 
 
+	print(a)
 	courseDict = dict()
 	for i in range(len(a)):
-		if len(a[i]) <= 3: print("Wow: ", a[i])
 
 		diffList = []
 		diff = 0
@@ -32,15 +32,15 @@ def makeSuggestion(firstCourse,secondCourse,thirdCourse):
 		if len(diffList) == 3:
 			for item in diffList:
 				if (item not in takenCourses):
-					courseDict[item] = courseDict.setdefault(item, 0.0) + .0000001
+					courseDict[item] = courseDict.setdefault(item, 0.0) + .000001
 		elif len(diffList) == 2:
 			for item in diffList:
 				if (item not in takenCourses):
-					courseDict[item] = courseDict.setdefault(item, 0.0) + .003
+					courseDict[item] = courseDict.setdefault(item, 0.0) + .3
 		elif len(diffList) == 1:
 			for item in diffList:
 				if (item not in takenCourses):
-					courseDict[item] = courseDict.setdefault(item, 0.0) + 4
+					courseDict[item] = courseDict.setdefault(item, 0.0) + 1
 
 	ret = sorted(courseDict,key = courseDict.get,reverse=True)
 
